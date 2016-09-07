@@ -1,7 +1,10 @@
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.Set;
 
 import javax.swing.Timer;
@@ -20,12 +23,11 @@ public class TimerAction implements ActionListener{
 	/**
 	 * 构造函数 
 	 */
-	public TimerAction(CanvasFrame canvasFrame){
-		this.width=canvasFrame.getWidth();
-		this.height=canvasFrame.getHeight();
-		this.graphics2d= (Graphics2D) canvasFrame.getCanvas().getGraphics();
+	public TimerAction(int width,int height,BufferedImage bImage){
+		this.width=width;
+		this.height=height;
+		this.graphics2d=(Graphics2D) bImage.getGraphics();
 		graphics2d.setColor(Color.WHITE);
-		this.canvasFrame=canvasFrame;
 	}
 	public void setTimer(Timer timer){
 		this.timer=timer;
