@@ -44,7 +44,7 @@ public class Camera_picture {
 	private Frame image;
 	public JLabel jLabel = new JLabel();
 	public JLabel jLabel_2 = new JLabel();
-	public String savedImageFile = "H:\\xiang15.jpg";
+	public String savedImageFile = "H:\\my.jpg";
 	
 	public boolean timer_on =false ;
 

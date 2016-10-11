@@ -18,7 +18,7 @@
 					JSONObject result = null;
 			
 					try {
-			
+						
 //						System.out.println(Charset.forName("UTF-8").name());
 //			
 //						System.out.println("FacePlusPlus API Test:");

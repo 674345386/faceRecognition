@@ -36,6 +36,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextPane;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Member;
@@ -53,7 +54,7 @@ public class new_client {
     private String jsonresult;
     private JTable table;
     private JTable table_1;
-    private int i=1;
+    private int i = 1;
 
     public void doMyjob() throws Exception {
         this.camera_picture = new Camera_picture();
@@ -61,8 +62,8 @@ public class new_client {
         this.picView = camera_picture.jLabel_2;
         this.cameraView = camera_picture.jLabel;
         // this.save_pic_path=camera_picture.savedImageFile;
-//        this.save_pic_path = "H:\\xiang"+i+".jpg";
-        this.save_pic_path = "H:\\xiang"+i+".jpg";
+//      this.save_pic_path = "H:\\xiang"+i+".jpg";
+        this.save_pic_path = "H:\\xiang13.jpg";
         this.drawRec = new DrawRec();
     }
 
@@ -203,7 +204,7 @@ public class new_client {
         panel_1.setBorder(null);
         tabbedPane_1.addTab("拍照识别", null, panel_1, null);
         //
-        JButton btnNewButton_1 = new JButton("打开摄像头");
+        JButton btnNewButton_1 = new JButton(" 打开摄像头");
         btnNewButton_1.setBackground(Color.LIGHT_GRAY);
         btnNewButton_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -266,13 +267,15 @@ public class new_client {
 //                    list.setBounds(10, 10, 150, 150);
 //                    panel.add(list);
                     //
-                    drawRec.setJsonString(jsonresult);
                     textArea_1.setText(jsonresult);
+                    //利用位置信息画矩形
+                    drawRec.setJsonString(jsonresult);
                     drawRec.setPicPath(save_pic_path);
                     DrawRec.Face_jason face_jason = drawRec.new Face_jason();
                     // drawRec.draw(save_pic_path,50,50,150,150);
                     // picView.setIcon(drawRec.draw(save_pic_path));
-                    picView.setIcon(face_jason.detectFace());
+                    face_jason.detectFace();
+                    picView.setIcon(face_jason.draw_pic());
                 } catch (Exception e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -303,9 +306,9 @@ public class new_client {
          */
         JButton btnNewButton_11 = new JButton("Next Picture");
         btnNewButton_11.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 i++;
-                save_pic_path = "H:\\xiang"+i+".jpg";
+                save_pic_path = "H:\\hua" + i + ".jpg";
 
                 try {
                     jsonresult = fInfo.the_whole(save_pic_path);
@@ -343,13 +346,13 @@ public class new_client {
                     DrawRec.Face_jason face_jason = drawRec.new Face_jason();
                     // drawRec.draw(save_pic_path,50,50,150,150);
                     // picView.setIcon(drawRec.draw(save_pic_path));
-                    picView.setIcon(face_jason.detectFace());
+//                    picView.setIcon(face_jason.detectFace());
                 } catch (Exception e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 } finally {
                 }
-        	}
+            }
         });
         btnNewButton_11.setBackground(Color.LIGHT_GRAY);
         panel_1.add(btnNewButton_11);
@@ -359,7 +362,8 @@ public class new_client {
         panel_3.setBackground(Color.LIGHT_GRAY);
         tabbedPane_1.addTab("训练人脸", null, panel_3, null);
 
-        JButton btn_people_creaate = new JButton("人物create");
+        JButton btn_people_creaate = new JButton("   人物创建   ");
+        btn_people_creaate.setBackground(Color.LIGHT_GRAY);
 
         btn_people_creaate.addActionListener(new ActionListener() {
 
@@ -374,7 +378,8 @@ public class new_client {
         });
         panel_3.add(btn_people_creaate);
 
-        JButton btnNewButton_3 = new JButton("人物delete");
+        JButton btnNewButton_3 = new JButton("   人物删除   ");
+        btnNewButton_3.setBackground(Color.LIGHT_GRAY);
         btnNewButton_3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String input = JOptionPane.showInputDialog(frame, "输入要删除的人物名字");
@@ -386,7 +391,8 @@ public class new_client {
         /**
          * group创建
          */
-        JButton btnNewButton_2 = new JButton(" 创建group ");
+        JButton btnNewButton_2 = new JButton("   创建group   ");
+        btnNewButton_2.setBackground(Color.LIGHT_GRAY);
         btnNewButton_2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String input = JOptionPane.showInputDialog(frame, "输入创建的group名");
@@ -399,23 +405,29 @@ public class new_client {
         panel_3.add(btnNewButton_2);
 
         JButton btnNewButton_4 = new JButton("人物添加进group");
+        btnNewButton_4.setBackground(Color.LIGHT_GRAY);
         btnNewButton_4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                fInfo.people_addIn_group();
+                String perosonName = JOptionPane.showInputDialog(frame, "输入要添加的人物名字");
+                String groupName = JOptionPane.showInputDialog(frame, "输入要添加进的group");
+                fInfo.people_addIn_group(perosonName, groupName);
                 JOptionPane.showMessageDialog(null, "人物添加进group");
             }
         });
         panel_3.add(btnNewButton_4);
 
-        JButton btnNewButton_6 = new JButton("group训练");
+        JButton btnNewButton_6 = new JButton("   group训练   ");
+        btnNewButton_6.setBackground(Color.LIGHT_GRAY);
         btnNewButton_6.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                fInfo.train_identify_for_group();
+                String groupName = JOptionPane.showInputDialog(frame, "输入要训练的group");
+                fInfo.train_identify_for_group(groupName);
                 JOptionPane.showMessageDialog(null, "group训练完成");
             }
         });
 
-        JButton btnNewButton_7 = new JButton("group删除");
+        JButton btnNewButton_7 = new JButton("  group删除  ");
+        btnNewButton_7.setBackground(Color.LIGHT_GRAY);
         btnNewButton_7.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String input = JOptionPane.showInputDialog(frame, "输入删除的group名");
@@ -427,6 +439,7 @@ public class new_client {
         //
 
         JButton btnNewButton_10 = new JButton("train_for_verify");
+        btnNewButton_10.setBackground(Color.LIGHT_GRAY);
         btnNewButton_10.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fInfo.train_verify_for_people();
@@ -442,6 +455,7 @@ public class new_client {
         tabbedPane_1.addTab("信息查询", null, panel_4, null);
 
         JButton btnNewButton_5 = new JButton("group_getInfo");
+        btnNewButton_5.setBackground(Color.LIGHT_GRAY);
         btnNewButton_5.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String input = JOptionPane.showInputDialog(frame, "要查询的group");
@@ -457,30 +471,37 @@ public class new_client {
          * 见/train/identify 。否则调用此API时将使用最后一次train时的数据。 使用前，先识别
          */
         JButton btnNewButton_8 = new JButton("检测人物是否在group");
+        btnNewButton_8.setBackground(Color.LIGHT_GRAY);
         btnNewButton_8.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String result = fInfo.recognition_identify_face_inGroup();
-                System.err.println(result);
+                String inputName = JOptionPane.showInputDialog(frame, "输入要查询的目的group");
+                String result = fInfo.recognition_identify_face_inGroup(inputName);
+                System.out.println(result);
                 // peopleList.addElement("abc");
-                //
                 // DefaultListModel<String> listModel = new
                 // DefaultListModel<String>();
                 // listModel.addElement("Debbie Scott");
                 // listModel.addElement("Scott Hommel");
                 // listModel.addElement("Scatt Hommel");
                 People_list_model defaultTableModel_2 = new People_list_model(result);
-                String[] arr = new String[5];
-                arr[0] = "123";
-                arr[1] = "123";
-                arr[2] = "123";
-                arr[3] = "123";
-                arr[4] = "123";
-                defaultTableModel_2.addRow(arr);
+
+                String simuName = defaultTableModel_2.getSimuNmae();
+                DrawRec.Face_jason face_jason = drawRec.new Face_jason();
+                try {
+                    face_jason.detectFace();
+                    picView.setIcon(face_jason.draw_str(simuName));
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+                // drawRec.draw(save_pic_path,50,50,150,150);
+                // picView.setIcon(drawRec.draw(save_pic_path));
+
+//                picView.setIcon(face_jason.detectFace());
+
                 table_1 = new JTable(defaultTableModel_2);
                 table_1.setGridColor(Color.GRAY);
                 table_1.setSelectionBackground(Color.gray);
                 table_1.setSelectionForeground(Color.white);
-
                 panel_5.add(table_1, "name_135354393933360");
                 //
             }
@@ -488,6 +509,7 @@ public class new_client {
         panel_4.add(btnNewButton_8);
 
         JButton btnNewButton_9 = new JButton("getresult_by_session");
+        btnNewButton_9.setBackground(Color.LIGHT_GRAY);
         btnNewButton_9.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fInfo.info_getsession();
@@ -500,6 +522,7 @@ public class new_client {
          * 获取一个Person的信息, 包括name, id, tag, 相关的face, 以及groups等信息
          */
         JButton btnNewButton_13 = new JButton("person_getInfo");
+        btnNewButton_13.setBackground(Color.LIGHT_GRAY);
         btnNewButton_13.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fInfo.people_getInfo();
